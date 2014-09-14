@@ -1,0 +1,5 @@
+app/code/community/Hackathon/TemplateHintsHover                            app/code/community/Hackathon/TemplateHintsHover
+app/etc/modules/Hackathon_TemplateHintsHover.xml                           app/etc/modules/Hackathon_TemplateHintsHover.xml
+app/design/frontend/base/default/layout/hackathon/templatehintshover.xml   app/design/frontend/base/default/layout/hackathon/templatehintshover.xml
+skin/frontend/base/default/css/hackathon/templatehintshover.css            skin/frontend/base/default/css/hackathon/templatehintshover.css
+skin/frontend/base/default/js/hackathon/templatehintshover.js              skin/frontend/base/default/js/hackathon/templatehintshover.js
