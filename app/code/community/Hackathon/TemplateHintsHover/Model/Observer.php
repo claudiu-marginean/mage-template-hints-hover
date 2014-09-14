@@ -32,6 +32,26 @@
  */
 class Hackathon_TemplateHintsHover_Model_Observer
 {
+    /**
+     * @var int
+     */
+    protected $hintId = 0;
+
+    /**
+     * Check if hints should be displayed
+     *
+     * @return bool
+     */
+    public function showHints() {
+        if (is_null($this->showHints)) {
+            $this->showHints = false;
+
+            if (Mage::getModel('core/cookie')->get('thh') || Mage::getSingleton('core/app')->getRequest()->get('thh')) {
+                $this->showHints = true;
+            }
+        }
+        return $this->showHints;
+    }
 
     /**
      * Add Template Hints
@@ -41,6 +61,30 @@ class Hackathon_TemplateHintsHover_Model_Observer
      */
     public function addTemplateHints(Varien_Event_Observer $observer)
     {
+        if (!$this->showHints()) {
+            return;
+        }
+
+        if (substr(trim($observer->getTransport()->getHtml()), 0, 4) == 'http') {
+            return;
+        }
+
+        $block = $observer->getBlock(); /* @var $block Mage_Core_Block_Abstract */
+
+        if (!$block || !($block instanceof Mage_Core_Block_Abstract)) {
+            return;
+        }
+
+        $transport = $observer->getTransport();
+        $blockHtml = $transport->getHtml();
+
+        $this->hintId++;
+
+        $wrappedHtml = '<div id="thh-' . $this->hintId . '-start" class="thh-wrap thh-start"></div>';
+        $wrappedHtml .= $blockHtml;
+        $wrappedHtml .= '<div id="thh-' . $this->hintId . '-stop" class="thh-wrap thh-stop"></div>';
+
+        $transport->setHtml($wrappedHtml);
 
     }
 }
